@@ -30,16 +30,14 @@ def CYKParser(input, CNF, src):
           P[1][s][v] = True
           break
   
-  iter = 1
   for l in range(2, A+1):
     for s in range(1, A-l+2):
       for p in range(1, l):
-        while iter <= B:
+        for iter in range(1, B + 1):
           for each in R[iter]:
             if (len(each) != 1):
               if P[p][s][map[each[0]]] and P[l-p][s+p][map[each[1]]]:
                 P[l][s][iter] = True
-          iter += 1
   
   # Hasil
   if P[A][1][1] == True:
@@ -50,9 +48,8 @@ def CYKParser(input, CNF, src):
     while (j > 0):
       if P[j][1][1] == True:
         break
-      else:
-        if input[j-1] == '\n':
-          i = newline[j-1]
+      if input[j-1] == '\n':
+        i = newline[j-1]
       j -= 1
     
     while (newlineStr[i-1][0] == ' '):
