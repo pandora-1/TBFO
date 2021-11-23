@@ -36,7 +36,7 @@ def CYKParser(input, CNF, src):
             if (len(each) != 1):
               if P[p][s][map[each[0]]] and P[l-p][s+p][map[each[1]]]:
                 P[l][s][iter] = True
-        iter += 1
+          iter += 1
   
   if P[A][1][1] == True:
     print("Accepted")
