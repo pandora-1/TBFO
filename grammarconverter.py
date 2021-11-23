@@ -117,5 +117,5 @@ def CNFtoFile(CNF) :
 
 # Driver
 CNF = getCNF("grammar.txt")
-display(CNF)
+# display(CNF)
 CNFtoFile(CNF)
