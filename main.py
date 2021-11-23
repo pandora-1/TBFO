@@ -1,15 +1,14 @@
 from grammarconverter import getCNF
 from cyk_parser import CYKParser
-import sys
-import re
+import sys, re
 
-mkey = {"if" : "a", "elif" : "b", "else" : "c", "for" : "d", "in" : "e", "while" : "f", "continue" : "g", "pass" : "h", "break" : "i", "class" : "j", "def" : "k", "return" : "l", "as" : "m", "import" : "n", "from" : "o", "raise" : "p", "and" : "q", "or" : "r", "not" : "s", "is" : "t", "True" : "u", "False" : "v", "None" : "w", "with" : "A"}
+keygram = {"if" : "a", "elif" : "b", "else" : "c", "for" : "d", "in" : "e", "while" : "f", "continue" : "g", "pass" : "h", "break" : "i", "class" : "j", "def" : "k", "return" : "l", "as" : "m", "import" : "n", "from" : "o", "raise" : "p", "and" : "q", "or" : "r", "not" : "s", "is" : "t", "True" : "u", "False" : "v", "None" : "w", "with" : "A"}
 
-# Color code
+# PCOLOR
 normal = "\033[1;37;40m"
 red = "\033[1;37;41m"
 
-def preprocessInput(inp):
+def checkFiniteAutomata(inp):
     kataBaru = ""
     res1 = inp.split('\n')
     for res2 in res1:
@@ -51,8 +50,8 @@ def preprocessInput(inp):
                     kataBaru += res[i]
                     newLine = False
             elif(open1):
-                if(res[i] in mkey and open2):
-                    kataBaru += mkey.get(res[i])
+                if(res[i] in keygram and open2):
+                    kataBaru += keygram.get(res[i])
                     newLine = False
                 elif(res[i] == "**" or res[i] == "==" and open2):
                     kataBaru += res[i]
@@ -124,87 +123,62 @@ def preprocessInput(inp):
         kataBaru += "\n"
     return (kataBaru)
 
-def highlightNameError(inp):
-    newInp = ""
-    while inp:
-        x = re.search("[0-9]+[A-Za-z_]+", inp)
-        if x != None:
-            newInp += inp[:x.span()[0]] + red + x.group() + normal
-            inp = inp[x.span()[1]:]
-        else:
-            newInp += inp
-            inp = ""
-    return (newInp)
-
-def fileReader(path):
+def readFile(path):
     with open(path, "r") as f:
         content = f.read()
     return content
 
-def banner():
+def header():
     print()
-    print("                  ___       _   _                     ")
-    print("                 / _ \_   _| |_| |__   ___  _ __      ")
-    print("                / /_)/ | | | __| '_ \ / _ \| '_ \     ")
-    print("               / ___/| |_| | |_| | | | (_) | | | |    ")
-    print("               \/     \__, |\__|_| |_|\___/|_| |_|    ")
-    print("               ___    |___/             _ _           ")
-    print("              / __\___  _ __ ___  _ __ (_) | ___ _ __ ")
-    print("             / /  / _ \| '_ ` _ \| '_ \| | |/ _ \ '__|")
-    print("            / /__| (_) | | | | | | |_) | | |  __/ |   ")
-    print("            \____/\___/|_| |_| |_| .__/|_|_|\___|_|   ")
-    print("                                 |_|   version 4.05   \n\n")
+    print("██████╗░██╗░░░██╗████████╗██╗░░██╗░█████╗░███╗░░██╗  ░█████╗░░█████╗░███╗░░░███╗██████╗░██╗██╗░░░░░███████╗██████╗░")
+    print("██╔══██╗╚██╗░██╔╝╚══██╔══╝██║░░██║██╔══██╗████╗░██║  ██╔══██╗██╔══██╗████╗░████║██╔══██╗██║██║░░░░░██╔════╝██╔══██╗")
+    print("██████╔╝░╚████╔╝░░░░██║░░░███████║██║░░██║██╔██╗██║  ██║░░╚═╝██║░░██║██╔████╔██║██████╔╝██║██║░░░░░█████╗░░██████╔╝")
+    print("██╔═══╝░░░╚██╔╝░░░░░██║░░░██╔══██║██║░░██║██║╚████║  ██║░░██╗██║░░██║██║╚██╔╝██║██╔═══╝░██║██║░░░░░██╔══╝░░██╔══██╗")
+    print("██║░░░░░░░░██║░░░░░░██║░░░██║░░██║╚█████╔╝██║░╚███║  ╚█████╔╝╚█████╔╝██║░╚═╝░██║██║░░░░░██║███████╗███████╗██║░░██║")
+    print("╚═╝░░░░░░░░╚═╝░░░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░╚═╝░░╚══╝  ░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚══════╝╚═╝░░╚═╝")
+    print("                                                ʙʏ Mɪᴄʜᴀᴇʟ, Kʀɪsᴛᴏ, ᴀɴᴅ Jᴀsᴏɴ                                      \n")
 
 if __name__ == "__main__":
-    banner()
+    header()
 
     # Get CNF
     CNF = getCNF("grammar.txt")
     namaFile = input("Masukkan nama file: ")
     # Input
     if (len(sys.argv) < 2):
-        inpFilePath = namaFile
+        path = namaFile
     else:
-        inpFilePath = sys.argv[1]
+        path = sys.argv[1]
 
     try:
-        inp = fileReader(inpFilePath)
+        inp = readFile(path)
     except Exception as e:
         print(red + "Error:" + str(e) + normal)
-        print("Using default path: 'test.py'\n")
+        print("Menggunakan testcase default: 'inputAcc.py'\n")
         try:
-            inpFilePath = "test.py"
-            inp = fileReader(inpFilePath)
+            path = "inputAcc.py"
+            inp = readFile(path)
         except Exception as e:
             print(red + "Error:" + str(e) + normal)
-            print("Terminating program...\n")
+            print("Menutup program...\n")
             exit(0)
 
-    inpHighlighted = highlightNameError(inp)
     source = inp
 
     # Preprocess
-    inp = preprocessInput(inp)
+    inp = checkFiniteAutomata(inp)
     
 
     #Waiting message
-    print("Compiling " + str(inpFilePath) + "...\n")
-    print("Waiting for your verdict...\n")
+    print("Compiling " + str(path) + "...\n")
+    print("Menunggu hasil compile...\n")
 
-    # Check
-    print("========================= SOURCE CODE =========================\n")
-    for i, line in enumerate(inpHighlighted.split("\n")):
-        idx =   f"  {i + 1} | " if len(str(i + 1)) == 1 else\
-                f" {i + 1} | " if len(str(i + 1)) == 2 else\
-                f"{i + 1} | "
-        print(idx + line)
-    # print(inpHighlighted.replace("\n", "\n"))
-    print("\n=========================== VERDICT ===========================\n")
+    print("\n%%%%%%%%%%%%%%%%%%%%%%%%%% RESULT %%%%%%%%%%%%%%%%%%%%%%%%%%")
     if (len(inp) == 0):
-        print("Accepted")
-        print("\n===============================================================")
+        print("Accepted. No errors detected.")
+        print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         exit(0)
 
     # Parse
     CYKParser(inp, CNF, source)
-    print("\n===============================================================")
+    print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")

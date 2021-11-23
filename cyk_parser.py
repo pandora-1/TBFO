@@ -41,7 +41,7 @@ def CYKParser(input, CNF, src):
   
   # Hasil
   if P[A][1][1] == True:
-    print("Accepted")
+    print("Accepted. No errors detected.")
   else:
     i = 1
     j = A
