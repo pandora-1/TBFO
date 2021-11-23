@@ -2,7 +2,7 @@ from copy import deepcopy
 import string
 
 def isNonTerminal(elem):
-    # Fungsi untuk mengecek elem dan mengembalikan true jika elem adalah non terminal atau var
+    # Fungsi untuk mengecek elem dan mengembalikan true jika elem adalah non terminal atau variabel
     if len(elem) == 1:
         return False
     for char in elem:
