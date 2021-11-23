@@ -1,7 +1,7 @@
 def CYKParser(input, CNF, src):
-  A = len(input)
-  B = len(CNF)
-  newline = {}
+  A = len(input) # Panjang input string dari file
+  B = len(CNF) # Panjang nonterminal
+  newline = {} 
   newlinePos = []
   newlineStr = src.split('\n')
   newlineCtr = 0
@@ -12,14 +12,17 @@ def CYKParser(input, CNF, src):
       newline[i] = newlineCtr
       newlinePos.append(i)
   
-  P = [[[0 for x in range(B + 1)] for x in range(A + 1)] for x in range(A + 1)] 
-  R = [None] * (B + 1)
+  # Inisiasi P yang merupakan array of booleans
+  P = [[[0 for x in range(B + 1)] for x in range(A + 1)] for x in range(A + 1)]  
+  R = [None] * (B + 1) # R berisi none dengan size B + 1
   map = {}
 
+  # Memasukan index dan variable yang terdapat di CNF ke map dan R
   for i, var in enumerate(CNF):
     map[var] = i + 1
     R[i + 1] = CNF[var]
   
+  # Algoritma CYK
   for s in range(1, A+1):
     for v in range(1, B+1):
       for each in R[v]:
@@ -38,6 +41,7 @@ def CYKParser(input, CNF, src):
                 P[l][s][iter] = True
           iter += 1
   
+  # Hasil
   if P[A][1][1] == True:
     print("Accepted")
   else:
