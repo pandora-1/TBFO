@@ -1,6 +1,7 @@
 from grammarconverter import getCNF
 from cyk_parser import CYKParser
 import sys
+import os
 
 keygram = {"if" : "a", "elif" : "b", "else" : "c", "for" : "d", "in" : "e", "while" : "f", "continue" : "g", "pass" : "h", "break" : "i", "class" : "j", "def" : "k", "return" : "l", "as" : "m", "import" : "n", "from" : "o", "raise" : "p", "and" : "q", "or" : "r", "not" : "s", "is" : "t", "True" : "u", "False" : "v", "None" : "w", "with" : "A"}
 
@@ -144,6 +145,11 @@ if __name__ == "__main__":
     # Get CNF
     CNF = getCNF("grammar.txt")
     namaFile = input("Masukkan nama file: ")
+
+    # Check file exist
+    while os.path.isfile(namaFile) == False:
+        namaFile = input("File tidak ditemukan! Masukkan ulang nama file yang valid: ")
+
     # Input
     if (len(sys.argv) < 2):
         path = namaFile

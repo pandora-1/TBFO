@@ -18,3 +18,4 @@ git clone https://github.com/pandora-1/TBFO.git
 python main.py
 ```
 4. Lalu masukkan nama file yang ingin diperiksa
+5. Pastikan file berada di directory yang sama dengan file main.py
