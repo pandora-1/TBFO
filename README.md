@@ -15,6 +15,6 @@ git clone https://github.com/pandora-1/TBFO.git
 2. Buka directory
 3. Jalankan program
 ```sh
-python main.py "namafile"
+python main.py
 ```
-*namafile dengan ekstensi (*.py)
+4. Lalu masukkan nama file yang ingin diperiksa
